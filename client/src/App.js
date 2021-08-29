@@ -2,6 +2,24 @@ import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import { isTerminatorless } from '@babel/types';
 
+/*
+
+async selectResponse(item) {
+  if(!this.select) {
+    this.select = true;
+    try {
+      // throws a request to quiz/server, and checks if the name clicked matches any of the server's keys
+      const response = await fetch('http://localhost:8000/' + item.text);
+      const data = response.json();
+      data.then( arr => { arr.length > 0 ? this.addScore(item, 1) : this.addScore(item, 0) });
+    } catch {
+      console.error
+    }
+  }
+},
+
+*/
+
 const uuid = uuidv4(),
       output = document.getElementById('output');
 
@@ -30,7 +48,7 @@ function playerReady() {
     };
     party.push(x);
     console.log(party);
-  }  
+  }
 }
 
 function finalizeParty() {
