@@ -1,0 +1,18 @@
+MAIN IDEA:
+People open this webapp, and either with others, or by themselves, Join a group until 5 are partied. From there it assigns a GROUP ID for them to all type into their Unite games, and either assigns a discord link to chat from there
+(could have free discord with 10 voice rooms, and it just sends a link to joins and says "Your voice lobby is #10")
+
+someone connects to server, a session is started and a session token is assigned
+
+session opts in or out of "I am okay with being the party leader" - requires text input of lobby ID
+
+something should show people where to click to join a lobby, without being condescending
+ "Where do I get my Lobby ID?" with help overlay?
+
+click "Ready to party", sends request to server, server receives session ID and optional lobbyID from client, checks if there are any stacks with exactly [x] remaining slots that this party could fill
+
+If not, looks all the way down (quick check here could save time - check if _any_ parties exist, and if not just create a new object key)
+
+state object stores either an object of objects, or array of objects, and pushing users into and out of these
+
+need something here to handle timeouts, like after everyone has joined a party the website confirms that you are in teh group now, and can close the browser/session

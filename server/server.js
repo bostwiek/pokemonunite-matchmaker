@@ -1,15 +1,41 @@
-// server.js File 
-const express = require('express'); // Importing express module 
-var cors = require("cors");
+const express = require('express');
+const cors = require('cors');
+const e = require('express');
+const app = express();
+const port = 8000;
 
-const app = express(); // Creating an express object 
-const port = 8000; // Setting an port for this application
+let allParties = [],
+    party = [],
+    partyLoopCount = 0;
 
 app.use(cors());
 
-let allParties = [];
+app.use(function (req, res, next) {
+res.header('Access-Control-Allow-Origin', '*')
+res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    next()
+});
 
-// Starting server using listen function 
+app.get('/',
+    function (req, res, next) {
+        res.send("What up GET")
+    }
+);
+
+app.post('/',
+    function (req, res, next) {
+        partyLoopCount++;
+        if(party.length <= 5) {
+            party.push(partyLoopCount);
+            res.send(partyLoopCount + " has joined the party (" + party.join(', ') + ")");
+        } else {
+            res.send('Party is full ' + partyLoopCount + ', ' + party.join(', ') + ' are your team mates.');
+            allParties.push(party);
+            party = [];
+        }
+    }
+);
+
 app.listen(port, function (err) { 
     if(err){ 
         console.log("Error while starting server"); 
@@ -17,20 +43,4 @@ app.listen(port, function (err) {
     else{ 
         console.log("Server has been started at "+port); 
     } 
-}) 
-
-// listen for get in base directory
-app.get('/:id', function (req, res) {
-    // console.log(req.params);
-    let urlString = req.params.id.split('&');
-    if(urlString.indexOf(undefined) >= 0 || urlString.indexOf('favicon.ico') >= 0) {
-        // res.send('error')
-    } else {
-        allParties.push(urlString[0]);
-        allParties.push(urlString[1]);
-    }
-    if(allParties.length > 9) {
-        res.send(allParties.join(','))
-    }
-    res.send("Still waiting for " + (10 - allParties.length) + " players to join");
-})
+});

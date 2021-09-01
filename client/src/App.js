@@ -1,6 +1,8 @@
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import { isTerminatorless } from '@babel/types';
+import 'axios';
+
 
 /*
 
@@ -19,6 +21,7 @@ async selectResponse(item) {
 },
 
 */
+const axios = require('axios');
 
 const uuid = uuidv4(),
       output = document.getElementById('output');
@@ -59,9 +62,13 @@ function finalizeParty() {
   output.innerText = partyOutput;
 }
 
-// would want to know username, and optionally "if party leader" and if so "lobbyID"
+function postTest() {
+  axios.post('http://localhost:8000', {
+    name: 'test'
+  })
+}
 
-//
+// would want to know username, and optionally "if party leader" and if so "lobbyID"
 
 // need function that
 // serves uuid
@@ -81,12 +88,12 @@ function App() {
 
           <br />
 
-          <label for="username">Username: </label>
+          <label htmlFor="username">Username: </label>
           <input type="text" name="username" id="username" />
 
           <br />
 
-          <label for="lobbyID">Lobby ID: </label>
+          <label htmlFor="lobbyID">Lobby ID: </label>
           <input type="text" name="lobbyID" id="lobbyID" placeholder="********" />
 
           <br />
@@ -99,6 +106,10 @@ function App() {
 
         </p>
       </main>
+
+      <footer>
+        <button onClick={_=>{postTest()}}>POST test</button>
+      </footer>
     </>
   );
 }
